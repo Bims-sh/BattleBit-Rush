@@ -9,12 +9,12 @@ public class ChatCommandList
 
     public static List<ChatCommand> AdminCommands { get; } = new()
     {
-        new PlayerDebug(),
-        new MapCommand()
+        new PlayerDebug()
     };
 
     public static List<ChatCommand> ModeratorCommands { get; } = new()
     {
-        new SendAnnouncement()
+        new SendAnnouncement(),
+        new MapCommand()
     };
 }

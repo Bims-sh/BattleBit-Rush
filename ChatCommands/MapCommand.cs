@@ -12,7 +12,7 @@ public class MapCommand : ChatCommand
         name: "map",
         description: "Add, remove or list current maps.",
         usage: "map <remove (r), add (a), list (ls), reload (rl)> [map name]",
-        minimumRequiredRole: PlayerRoles.Admin
+        minimumRequiredRole: PlayerRoles.Moderator
     )
     {
         Action = (args, player) =>
@@ -42,7 +42,7 @@ public class MapCommand : ChatCommand
                         return;
                     }
                     
-                    var mapToAdd = string.Join(" ", args);
+                    var mapToAdd = string.Join(" ", args).ToUpperInvariant();
                     if (MapHelper.IsValidMap(mapToAdd))
                     {
                         if (!Server.MapRotation.AddToRotation(mapToAdd))
@@ -54,6 +54,7 @@ public class MapCommand : ChatCommand
                         Program.ServerConfiguration.MapRotation.Add(mapToAdd);
                         Program.SaveConfiguration(Program.ServerConfiguration);
                         player.Message($"Added {RichTextHelper.Bold(true)}{RichTextHelper.FromColorName("Gold")}{mapToAdd}{RichTextHelper.Color()}{RichTextHelper.Bold(false)} to the rotation.");
+                        Program.Logger.Info($"Added {mapToAdd} to the rotation.");
                     } 
                     else
                     {
@@ -68,7 +69,7 @@ public class MapCommand : ChatCommand
                         return;
                     }
                     
-                    var mapToRemove = string.Join(" ", args);
+                    var mapToRemove = string.Join(" ", args).ToUpperInvariant();
                     if (MapHelper.IsValidMap(mapToRemove))
                     {
                         if (!Server.MapRotation.RemoveFromRotation(mapToRemove))
@@ -80,6 +81,7 @@ public class MapCommand : ChatCommand
                         Program.ServerConfiguration.MapRotation.Remove(mapToRemove);
                         Program.SaveConfiguration(Program.ServerConfiguration);
                         player.Message($"Removed {RichTextHelper.Bold(true)}{RichTextHelper.FromColorName("Gold")}{mapToRemove}{RichTextHelper.Color()}{RichTextHelper.Bold(false)} from the rotation.");
+                        Program.Logger.Info($"Removed {mapToRemove} from the rotation.");
                     }
                     else
                     {
@@ -101,6 +103,7 @@ public class MapCommand : ChatCommand
                     Program.ReloadConfiguration();
                     
                     player.Message("Reloaded map rotation.");
+                    Program.Logger.Info("Reloaded map rotation.");
                     break;
                 default:
                     player.Message($"Invalid action. Usage: {Usage}");

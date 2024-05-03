@@ -1,5 +1,5 @@
-﻿using BattleBitAPI.Common;
-using BattleBitApi.Api;
+﻿using BattleBitApi.Api;
+using Microsoft.Extensions.Logging;
 
 namespace BattleBitApi.Events;
 
@@ -28,6 +28,9 @@ public class ServerSettings : Event
         }
 
         Server.GamemodeRotation.AddToRotation("RUSH");
+
+        var serverRotation = Server.MapRotation.GetMapRotation();
+        Program.Logger.Info($"Loaded Map Rotation: {string.Join(", ", serverRotation)}");
         
         return Task.CompletedTask;
     }
