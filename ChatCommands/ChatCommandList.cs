@@ -10,7 +10,7 @@ public class ChatCommandList
     public static List<ChatCommand> AdminCommands { get; } = new()
     {
         new PlayerDebug(),
-        new TeleportCommand()
+        new MapCommand()
     };
 
     public static List<ChatCommand> ModeratorCommands { get; } = new()

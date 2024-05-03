@@ -15,5 +15,6 @@ public class Configuration
         [Required] public LogLevel LogLevel { get; set; } = LogLevel.Players | LogLevel.GameServers | LogLevel.GameServerErrors | LogLevel.Sockets;
         [Required] public string ChatCommandPrefix { get; set; } = "!";
         public string Password { get; set; } = "";
+        public List<string> MapRotation { get; set; } = new();
     }
 }
